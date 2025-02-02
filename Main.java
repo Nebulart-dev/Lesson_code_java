@@ -1,205 +1,440 @@
-import java.util.LinkedList;
-
-class Node {
-    String value;
-    Node next;
-
-    public Node(String value) {
-        this.value = value;
+/* public class Main {
+    public static void main(String[] args) {
+    int x, y, z;
+    x = 100;
+    y = 100 + 20;
+    z = y - 20;
+    System.out.println("X = " + x);
+    System.out.println("Y = " + y);
+    System.out.println("Z = " + z);
     }
 }
+*/
 
-class MyLinkedList {
-    Node head;
-
-    public void addLast(String value) {
-        if (head == null) {
-            head = new Node(value);
-        } else {
-            Node tmp = head;
-            while (tmp.next != null) {
-                tmp = tmp.next;
-            }
-            Node newNode = new Node(value);
-            tmp.next = newNode;
-        }
-    }
-
-    public void addStart(String value){
-        Node newNode = new Node(value);
-        newNode.next = head;
-        head = newNode;
-    }
-
-
-    public void print() {
-        Node tmp = head;
-        while (tmp != null) {
-            System.out.print(tmp.value + " ");
-            tmp = tmp.next;
-        }
-        System.out.println();
-    }
-
-    public int indexOf(String value){//Farid
-        Node tmp = head;
-        int index = 0;
-        while (tmp!=null){
-            if (tmp.value.equals(value)){
-                return index;
-            }
-            tmp = tmp.next;
-            index++;
-        }
-
-        return -1;
-    }
-
-    public int size(){
-        Node tmp = head;
-        int size = 0;
-        while (tmp!=null){
-            size++;
-            tmp = tmp.next;
-        }
-        return size;
-    }
-
-
-    public String removeLast(){
-        if (head==null) return null;
-        if (head.next==null){
-            String removed =head.value;
-            head = null;
-            return removed;
-        }
-
-        Node tmp = head;
-        while (tmp.next.next!=null){
-            tmp = tmp.next;
-        }
-        String removed = tmp.next.value;
-        tmp.next = null;
-        return  removed;
-    }
-
-    //-10
-    public void add(int index , String value) throws Exception {
-        int size = size();
-
-        if (index<0 || index>size)
-            throw new Exception("Index bolse size libo mense 0");
-
-        if (index ==0){
-            addStart(value);
-            return;
-        }
-
-        if (index==size){
-            addLast(value);
-            return;
-        }
-
-        Node tmp = head;
-        for (int i = 0; i < index-1; i++) {
-            tmp = tmp.next;
-        }
-
-//        Node node = new Node();//1
-//        Node node = new Node(value);//2
-        Node node = new Node(value);
-        node.next =  tmp.next;//999-> 20
-        tmp.next = node;
-    }
-
-//  +  public void addLast(String value);  DOBAV V KONEC
-//  +  public void print();  NAPECATAY VES LINKEDLIST
-//  +  public void addStart(String value); DOBAV V NACALO
-
-    //---------------------------------------------------------------------------
-
-//  +  public int size(); VERNI RAZMER (SKOLKO NODE)
-//  -  public boolean contains(String value); // ESLI EST VERNET TRUE ESLI NET FALSE
-//  +  public int indexOf(String value);  VOZVRAWAET INDEX DANNOQO ELEMENTA ELSI NETU -1
-//  -  public String get(int index); VOZVRAWAET SAM ELEMENT  ELSI NETU THROW NEW EXCEPTION(VI VISLI ZA RAZMER)
-//  +  public void add(int index , String value);// DOBAVIT NODE V UKAZANNIY INDEX
-
-    //---------------------------------------------------------------------------
-
-//  -  public void clear();                        ocisaet linked list
-//  -  public boolean isEmpty();                   vozvrasaet true esli linked list pustoy inace false
-//  -  public String removeFirst();                udalyayet perviy element i vozvrasaet eqo
-//  +  public String removeLast();                 udalyayet posledniy element i vozvrasaet eqo
-//  -  public String getFirst();                   vernut perviy element
-//  -  public String getLast();                    vernut posledniy element
-//  -  public String remove(int index);            udalyayet po indeksu i vozvrasaet udalyayemiy obyekt
-//  -  public String remove(String value);         udalyayet po znaceniyu i vozvrasaet udalyayemiy obyekt
-//  -  public void set(int index,String value);    zameni znacenie ukazannoqo index na value
-
-    //****  ---------------------------------------------------------------------------
-
-//  -  public void sort();                         sortiruet elementi po (vozrastaniyu / ubbivaniyu)
-//  -  public void reverse();                      povoracivaet elementi naoborot
-
-    //---------------------------------------------------------------------------
-}
+/*
 public class Main {
     public static void main(String[] args) {
-
-        MyLinkedList myLinkedList = new MyLinkedList();
-        myLinkedList.addLast("Farid");
-        myLinkedList.addLast("David");
-        myLinkedList.addLast("Oleq");
-        myLinkedList.addLast("Mawa");
-        myLinkedList.print();
-        try {
-            myLinkedList.add(2,"999");
-        } catch (Exception e) {
-            System.out.println("Ne dobavil " + e.getMessage());
-        }
-        myLinkedList.print();
-
-
-//        myLinkedList.addLast("Dima");
-//        myLinkedList.addLast("BTC");
-//        myLinkedList.addLast("COIN");
-//        myLinkedList.addStart("999");
-//        myLinkedList.addStart("1000");
-//        myLinkedList.addStart("00");
-//        myLinkedList.print();//Farid
-//        System.out.println(myLinkedList.size());//10
-//        System.out.println(myLinkedList.removeLast());////Farid
-//        System.out.println(myLinkedList.size());//9
-//        myLinkedList.print();
-//        System.out.println(myLinkedList.indexOf("00"));
-//        System.out.println(myLinkedList.size());//10
-//        System.out.println(myLinkedList.size());//0
-
-
-//        LinkedList<String> linkedList = new LinkedList<>();
-////        linkedList.addFirst("1");
-////        linkedList.addFirst("2");
-////        linkedList.addFirst("3");
-////        linkedList.addLast("1");
-////        linkedList.addLast("2");
-////        linkedList.addLast("3");
-////        linkedList.add("4");
-////        linkedList.add(0,"999");
-//        linkedList.remove(0);
-//        linkedList.remove("Farid");
-//        linkedList.removeFirst();
-//        linkedList.removeLast();
-//        linkedList.contains("999");
-//        linkedList.get(0);
-//        linkedList.getFirst();
-//        linkedList.getLast();
-//        linkedList.clear();
-//        linkedList.isEmpty();
-
-
-//        for (String value : linkedList){
-//            System.out.print(value + " ");
-//        }
+        int x, age, z;
+        x = 100;
+        age = 22;
+        z = x / 100;
+        System.out.println("Число: " + x + ", возраст: " + age + ", второе число: " + z);
 
     }
 }
+*/
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int z = 5;
+        z++;
+        int c = ++z;
+        System.out.println(c++); //1
+        int f = --z;
+        System.out.println(++f); //2
+        int q = --c + f--;
+        System.out.println(q); //3
+        System.out.println(f);
+    }
+}
+*/
+/*
+public class Main {
+    public static void main(String[] args) {
+        int age = 15;
+    if (age >= 18) {
+        System.out.println("OK");
+    }
+    else {
+            System.out.println("No");
+    }
+    }
+}
+*/
+/*
+public class Main {
+    public static void main(String[] args) {
+        boolean money = true;
+        String text = "Пришли 100 рублей";
+
+        if (money == true) {
+            System.out.println("Друг ");
+        } else {
+            System.out.println("Должник ");
+        }
+        System.out.println(text);
+    }
+}
+*/
+/*
+public class Main {
+    public static void main(String[] args) {
+       int age = 4;
+        System.out.println("Ваш возраст: " + age);
+       if (age == 10) {
+            System.out.print("Ваша категория: ");
+            System.out.print("Ребенок");
+        } else if (age >= 18) {
+            System.out.print("Ваша категория: ");
+            System.out.print("Взрослый");
+        } else if (age >= 70) {
+            System.out.print("Ваша категория: ");
+            System.out.print("Пожилой");
+        } else {
+            System.out.print("Ни одна категория не подходит!");
+        }
+    }
+}
+*/
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        boolean isMan = true;
+        int age = 18;
+        if (isMan == true && age >= 18) {
+            System.out.println(" Взрослый");
+        } else {
+            System.out.println(" Ребенок");
+        }
+    }
+}
+*/
+/*
+public class Main {
+    public static void main(String[] args) {
+        boolean isX = true;
+        boolean isY = true;
+        int age = 10;
+
+        if ((age > 30 && (isY || isX))) {
+            System.out.println("X");
+        } else {
+            System.out.println("Y");
+        }
+    }
+}
+*/
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int age = 10;
+        int w = 20;
+        boolean isMan = true;
+
+        if (!isMan) {
+            System.out.println(1);
+            if (w > age || isMan == false) {
+                System.out.println(2);
+            } else {
+                System.out.println(3);
+            }
+        }else{
+            System.out.println(4);
+        }
+    }
+}
+
+ */
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int num = 4;
+        switch (num) {
+            case 1:
+                System.out.println("Один");
+                break;
+            case 2:
+                System.out.println("Два");
+                break;
+            case 3:
+                System.out.println("Три");
+                break;
+            case 4:
+                System.out.println("Четыре");
+                break;
+            default:
+                System.out.println("Неизвестно");
+        }
+    }
+}
+
+ */
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        char word = 'g';
+
+        switch (word) {
+            case 'r':
+                System.out.printf("Красный");
+                break;
+            case 'b':
+                System.out.printf("Синий");
+                break;
+            case 'y':
+                System.out.printf("Желтый");
+                break;
+            case 'g':
+                System.out.printf("Зеленный");
+                break;
+            default:
+                System.out.println("Такого цвета нету в базе");
+
+        }
+    }
+}
+
+ */
+/*
+public class Main {
+    public static void main(String[] args) {
+        int a = 1;
+        if (a > 0)
+            System.out.println("Hello 1");
+        System.out.println("Hello 2");
+    }
+}
+
+ */
+/*
+public class Main {
+    public static void main(String[] args) {
+        int x = 50;
+        int y = 100;
+
+        System.out.println(
+                x > y ? "X= " + x + " больше Y= " + y :
+                        x < y ? "y= " + y + " больше X= " + x : "Они равны");
+    }
+}
+
+ */
+
+// --------  03.11.2024
+
+import java.sql.SQLOutput;
+import java.util.Random;
+
+/*
+public class Main {
+    public static void main(String[] args) {
+    for (int i = 1; i < 11; i++) {
+        if (i%2==0){
+            System.out.println(i + " Четное");
+        }else{
+            System.out.println(i + " Не четное");
+        }
+    }
+    }
+}
+
+ */
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int num = 10;
+        for (int i = 0; i < num; i++) {
+            if (i%2==0) {
+                i--;
+                continue;
+            }
+            System.out.println(i);
+        }
+    }
+}
+ */
+/*
+public class Main {
+    public static void main(String[] args) {
+        int count = 10;
+
+        for (int i = 0; i < count; i++) {
+            if (count < 0) {
+                count = i + i;
+                i = i * 10;
+            } else {
+                i++;
+                count++;
+            }
+            System.out.println(i);
+        }
+    }
+}
+
+ */
+/*
+public class Main {
+    public static void main(String[] args) {
+        for (int i = 1; i < 4; i++) {
+            System.out.println("******");
+        }
+    }
+}
+
+ */
+/*
+public class Main {
+    public static void main(String[] args) {
+        int count = 10;
+        for (int i = 0; i < count; i++) {
+            for (int j = 0; j < count; j++) {
+                System.out.print(" * ");
+            }
+            System.out.println();
+        }
+    }
+}
+*/
+
+/*
+public class Main {
+    public static void main(String[] args) {
+        int a = 10;
+        boolean b = false;
+
+        if (!b || ++a > 9) {
+            System.out.println("Okay");
+        }
+        System.out.println("A => " + a);
+        System.out.println("B => " + b);
+    }
+}
+
+ */
+/*
+public class Main {
+    public static void main(String[] args) {
+        int x = 10;
+        int i = 0, j = 0, k = 0;
+
+        while (i<x) {
+            j = 0;
+            while (j < x - i) {
+                if (j==x-i-1) {
+                    k = 0;
+                    while (k <= i*2) {
+                        if ((i == 0 || i == x - 1 || k == 0 || k == i * 2))
+                            System.out.println("*");
+                        else if ((i > x / 2))
+                            System.out.println("*");
+                        else
+                            System.out.println(" ");
+                        k++;
+                    }
+                } else {
+                    System.out.println(" ");
+                }
+                j++;
+            }
+            System.out.println();
+            i++;
+        }
+    }
+}
+
+ */
+/*
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {-10, -20, -30, -40, 1, 10, 40, 5, 50};
+        int max = arr[0];
+        int min = arr[0];
+
+        Random random = new Random();
+        for (int i = 0; i < arr.length; i++) {
+            if (max < arr[i]){
+                max = arr[i];
+            }
+            if (min > arr[i]){
+                min = arr[i];
+            }
+        }
+        System.out.println();
+        System.out.println("Max: " + max);
+        System.out.println("Min: " + min);
+    }
+}
+
+ */
+/*
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 4, 5};
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println(arr[2]);
+    }
+}
+*/
+/*
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        int count = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                System.out.println("Iter:" + count);
+                System.out.println("Arr["+j+"]=" + arr[j] + " , arr["+(j+1)+"]="+arr[j+1]);
+                if (arr[j] > arr[j + 1]) {
+                    System.out.println("Делай замену!\n Потому что " + arr[j] + " > cem " + arr[j+1]);
+                    int tmp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = tmp;
+                }
+                System.out.println();
+            }
+        }
+        for (int i = 0; i < arr.length; i++) {
+            System.out.println(arr[i] + " ");
+        }
+    }
+}
+*/
+
+/*
+//Сортировка чисел
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = {1, 5, -5, 3, -10, -3, -1, 10};
+        System.out.println("Положительные:");
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > 0) {
+                System.out.println(arr[i]);
+            }
+        }
+        System.out.println("Отрицательные:");
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] < 0) {
+                System.out.println(arr[i]);
+            }
+        }
+    }
+}
+
+ */
+
+//Подчет 0 в случайных чисел
+public class Main {
+    public static void main(String[] args) {
+        int[] arr = new int[20];
+        int count = 0;
+        Random random = new Random();
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = random.nextInt(41);
+            System.out.print(count + " ");
+            if (arr[i] == 0) {
+                count++;
+            }
+            System.out.println("=> " + count);
+        }
+    }
+}
+
